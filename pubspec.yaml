@@ -1,0 +1,26 @@
+name: ima_no_jisho
+description: "辞書的意味と今の使われ方をAIで並列表示する日本語・英語辞書アプリ"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^2.4.10
+  go_router: ^13.2.0
+  google_fonts: ^5.1.0
+  http: ^1.2.0
+  shared_preferences: ^2.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,41 @@
+{
+  "date": "2026-03-09",
+  "screenshots": [
+    {
+      "id": "S-01",
+      "path": "docs/screenshots/2026-03-09/S-01_splash.png"
+    },
+    {
+      "id": "S-02",
+      "path": "docs/screenshots/2026-03-09/S-02_home.png"
+    },
+    {
+      "id": "S-03",
+      "path": "docs/screenshots/2026-03-09/S-03_result_確信犯.png"
+    },
+    {
+      "id": "S-03-loaded",
+      "path": "docs/screenshots/2026-03-09/S-03_result_確信犯_loaded.png"
+    },
+    {
+      "id": "S-04",
+      "path": "docs/screenshots/2026-03-09/S-04_daily_word.png"
+    },
+    {
+      "id": "S-04-share",
+      "path": "docs/screenshots/2026-03-09/S-04_share_sheet.png"
+    },
+    {
+      "id": "S-05",
+      "path": "docs/screenshots/2026-03-09/S-05_calendar.png"
+    },
+    {
+      "id": "S-03-en",
+      "path": "docs/screenshots/2026-03-09/S-03_result_gaslight.png"
+    },
+    {
+      "id": "S-06",
+      "path": "docs/screenshots/2026-03-09/S-06_settings.png"
+    }
+  ]
+}

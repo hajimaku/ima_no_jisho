@@ -1,0 +1,238 @@
+# 「今」の辞書 — タスクバックログ
+# 完了したタスクはstatus: done、sns_auto: trueにしてCompleted_atを記入する
+# 週1回 Claude.ai で「今の辞書の投稿作って」と呼び出すと投稿文が自動生成される
+
+tasks:
+
+  # ===== 完了済み =====
+
+  - id: task-001
+    title: "デザインシステム構築（theme.dart）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "墨・和紙・朱・金の日本の伝統色でダークテーマを設計した話。辞書アプリなのにこんなにかっこよくなるんだという驚きとして発信"
+    screenshot_path: null
+
+  - id: task-002
+    title: "画面ルーティング設定（GoRouter）"
+    area: architecture
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-09"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-003
+    title: "S-02 ホーム画面UI（検索バー・今日の一言カード・ボトムナビ）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "言葉を調べるだけのアプリなのに、開くたびに今日の一言が待っている。習慣になる入口を作った話"
+    screenshot_path: "docs/screenshots/2026-03-09/S-02_home.png"
+
+  - id: task-004
+    title: "S-03 検索結果画面UI（辞書的意味／今の使われ方の並列表示）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "同じ画面に「辞書の意味」と「今の意味」が並んだとき、言葉の変化がリアルに見える。そのデザインをどう作ったか"
+    screenshot_path: "docs/screenshots/2026-03-09/S-03_result_確信犯.png"
+
+  - id: task-005
+    title: "S-03 スケルトンUI・誤用注意ブロック実装"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "AIが考えている間もユーザーを不安にさせない。スケルトンUIで「読み込み中」を体験として昇華した話"
+    screenshot_path: null
+
+  - id: task-006
+    title: "S-03 検索履歴チップUI（最近調べた言葉）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "以前調べた言葉がホームにチップで残る。また気になって調べてしまう、中毒性の設計"
+    screenshot_path: null
+
+  - id: task-007
+    title: "S-04 今日の一言 詳細画面（前後ナビ・関連単語・シェア）"
+    area: daily_word
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "毎朝1つ言葉の雑学が届く。「昨日の一言」も振り返れる設計。言葉の学びが積み重なる体験として発信"
+    screenshot_path: "docs/screenshots/2026-03-09/S-04_daily_word.png"
+
+  - id: task-008
+    title: "S-05 カレンダー履歴画面（ストリーク・ドット記録）"
+    area: calendar
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "継続した日が朱色で染まっていくカレンダー。7日連続の🔥バッジ。辞書アプリに継続モチベーションを組み込んだ話"
+    screenshot_path: "docs/screenshots/2026-03-09/S-05_calendar.png"
+
+  - id: task-009
+    title: "FastAPIバックエンド雛形 + Claude API接続準備"
+    area: backend
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-09"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-010
+    title: "Playwright MCP導入・全画面スクリーンショット自動化"
+    area: tooling
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "Claude CodeにPlaywrightを持たせたら、実装するたびに自動でアプリのスクショを撮ってくれるようになった。開発ログが勝手に溜まる"
+    screenshot_path: null
+
+  # ===== 進行中 =====
+
+  - id: task-011
+    title: "Claude API実接続・POST /api/search 動作確認"
+    area: backend
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "「確信犯」と入力したらAIが本来の意味と今の使われ方を返してくれた瞬間の話。辞書アプリが生きた"
+    screenshot_path: null
+
+  # ===== 未着手 =====
+
+  - id: task-012
+    title: "FlutterとバックエンドAPIの接続（search_provider実装）"
+    area: integration
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "フロントとバックエンドがつながった。入力した言葉にAIがリアルタイムで答えを返す瞬間"
+    screenshot_path: "docs/screenshots/2026-03-09/S-03_result_確信犯_loaded.png"
+
+  - id: task-013
+    title: "24時間キャッシュ実装（APIコスト削減）"
+    area: performance
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-09"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-014
+    title: "今日の一言シェア機能（画像カード生成）"
+    area: share
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "言葉カードをSNSにシェアできるようにした。黒背景に金文字の一言カード、貼りたくなるデザインにした話"
+    screenshot_path: "docs/screenshots/2026-03-09/S-04_share_sheet.png"
+
+  - id: task-015
+    title: "Supabase連携・ログ記録"
+    area: backend
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-09"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-016
+    title: "英語検索対応"
+    area: search
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-09"
+    sns_hint: "日本語だけじゃなく英語も対応。slangや現代ニュアンスの変化も解析できるようになった話"
+    screenshot_path: "docs/screenshots/2026-03-09/S-03_result_gaslight.png"
+
+  - id: task-017
+    title: "S-01 スプラッシュ画面"
+    area: ui
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-09"
+    sns_hint: null
+    screenshot_path: "docs/screenshots/2026-03-09/S-01_splash.png"
+
+  - id: task-018
+    title: "S-06 設定画面（言語切替・通知設定）"
+    area: ui
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-09"
+    sns_hint: null
+    screenshot_path: "docs/screenshots/2026-03-09/S-06_settings.png"
+
+  - id: task-019
+    title: "SNS投稿文自動生成スクリプト（generate_posts.py）"
+    area: tooling
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-10"
+    sns_hint: "backlogを読み込んでClaude APIが7日分の投稿文を自動生成。X・IG・TikTok台本・Buffer手順まで一発で出てくる開発ログ"
+    screenshot_path: null
+
+  - id: task-020
+    title: "X・Instagram・TikTokアカウント開設"
+    area: sns
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-10"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-021
+    title: "Buffer設定・3SNS連携・初回投稿"
+    area: sns
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-10"
+    sns_hint: null
+    screenshot_path: null
+
+  # ===== 次フェーズ =====
+
+  - id: task-022
+    title: "本番デプロイ（Flutter Web + FastAPI）"
+    area: infra
+    status: todo
+    sns_auto: true
+    completed_at: null
+    sns_hint: "ローカルだけで動かしてたアプリが、URLをシェアするだけで誰でも使えるようになった話"
+    screenshot_path: null
+
+  - id: task-023
+    title: "App Store / Google Play 申請準備"
+    area: release
+    status: todo
+    sns_auto: true
+    completed_at: null
+    sns_hint: "審査に出した。個人開発アプリがストアに並ぶまでの話"
+    screenshot_path: null
+
+  - id: task-024
+    title: "プッシュ通知実装（毎朝の今日の一言）"
+    area: notification
+    status: todo
+    sns_auto: true
+    completed_at: null
+    sns_hint: "毎朝8時に言葉の雑学が届くようになった。通知が来るたびに言葉と向き合える体験"
+    screenshot_path: null
+
+  - id: task-025
+    title: "ユーザー認証（Supabase Auth）"
+    area: backend
+    status: todo
+    sns_auto: false
+    completed_at: null
+    sns_hint: null
+    screenshot_path: null
