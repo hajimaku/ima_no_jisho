@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
   static const Color background = Color(0xFF0A0A14); // 墨
@@ -14,6 +13,9 @@ class AppColors {
 }
 
 class AppTheme {
+  static const String _serif = 'Noto Serif JP';
+  static const String _sans  = 'Noto Sans JP';
+
   static ThemeData get dark {
     return ThemeData(
       brightness: Brightness.dark,
@@ -29,57 +31,66 @@ class AppTheme {
         onSurface: AppColors.washi,
         onPrimary: AppColors.washi,
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         // 見出し：Noto Serif JP
-        displayLarge: GoogleFonts.notoSerif(
+        displayLarge: TextStyle(
+          fontFamily: _serif,
           color: AppColors.washi,
           fontSize: 28,
           fontWeight: FontWeight.w700,
         ),
-        displayMedium: GoogleFonts.notoSerif(
+        displayMedium: TextStyle(
+          fontFamily: _serif,
           color: AppColors.washi,
           fontSize: 22,
           fontWeight: FontWeight.w700,
         ),
-        headlineLarge: GoogleFonts.notoSerif(
+        headlineLarge: TextStyle(
+          fontFamily: _serif,
           color: AppColors.washi,
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
-        headlineMedium: GoogleFonts.notoSerif(
+        headlineMedium: TextStyle(
+          fontFamily: _serif,
           color: AppColors.washi,
           fontSize: 18,
           fontWeight: FontWeight.w600,
         ),
-        // 本文：Noto Sans
-        bodyLarge: GoogleFonts.notoSans(
+        // 本文：Noto Sans JP
+        bodyLarge: TextStyle(
+          fontFamily: _sans,
           color: AppColors.washi,
           fontSize: 16,
         ),
-        bodyMedium: GoogleFonts.notoSans(
+        bodyMedium: TextStyle(
+          fontFamily: _sans,
           color: AppColors.washi,
           fontSize: 14,
         ),
-        bodySmall: GoogleFonts.notoSans(
+        bodySmall: TextStyle(
+          fontFamily: _sans,
           color: AppColors.washi,
           fontSize: 12,
         ),
-        labelLarge: GoogleFonts.notoSans(
+        labelLarge: TextStyle(
+          fontFamily: _sans,
           color: AppColors.washi,
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
       ),
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.notoSerif(
+        titleTextStyle: TextStyle(
+          fontFamily: _serif,
           color: AppColors.washi,
           fontSize: 20,
           fontWeight: FontWeight.w700,
         ),
-        iconTheme: const IconThemeData(color: AppColors.washi),
+        iconTheme: IconThemeData(color: AppColors.washi),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -88,8 +99,9 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
-        hintStyle: GoogleFonts.notoSans(
-          color: AppColors.washi.withOpacity(0.4),
+        hintStyle: const TextStyle(
+          fontFamily: _sans,
+          color: Color(0x66F5F0E8),
           fontSize: 16,
         ),
       ),
