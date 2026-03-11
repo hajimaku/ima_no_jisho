@@ -12,10 +12,12 @@ app = FastAPI(
 )
 
 import os
+import logging
 
 # 本番ではCORS_ORIGINSを環境変数で追加可能
 _extra_origins = [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
 _origins = ["http://localhost:3000", "http://localhost:8080"] + _extra_origins
+logging.warning(f"CORS origins: {_origins}")
 
 app.add_middleware(
     CORSMiddleware,
