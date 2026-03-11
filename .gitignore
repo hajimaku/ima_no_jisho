@@ -37,7 +37,12 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+/build/android/
+/build/ios/
+/build/macos/
+/build/linux/
+/build/windows/
+/build/flutter_assets/
 
 # Symbolication related
 app.*.symbols

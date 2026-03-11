@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-// ローカル開発: http://localhost:8000
-// 本番: 環境変数 FLUTTER_API_BASE_URL で切り替え
-const String _defaultBaseUrl = 'http://localhost:8000';
-
-String get apiBaseUrl {
-  const env = String.fromEnvironment('API_BASE_URL', defaultValue: _defaultBaseUrl);
-  return env;
-}
+// ローカル開発: flutter run --dart-define=API_BASE_URL=http://localhost:8000
+// 本番: デフォルトでRenderのURLを使用
+const String apiBaseUrl = String.fromEnvironment(
+  'API_BASE_URL',
+  defaultValue: 'https://ima-no-jisho.onrender.com',
+);
 
 class ApiException implements Exception {
   final int statusCode;
