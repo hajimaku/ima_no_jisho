@@ -31,6 +31,11 @@ app.include_router(daily_word.router, prefix="/api")
 app.include_router(log.router, prefix="/api")
 
 
+@app.get("/")
+async def root():
+    return {"status": "ok"}
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
