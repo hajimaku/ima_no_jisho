@@ -27,6 +27,7 @@ class SearchResult {
   final String modernExample;
   final String? caution;
   final String? usageRatio;
+  final List<String> relatedWords;
 
   const SearchResult({
     required this.word,
@@ -38,6 +39,7 @@ class SearchResult {
     required this.modernExample,
     this.caution,
     this.usageRatio,
+    this.relatedWords = const [],
   });
 
   factory SearchResult.fromJson(Map<String, dynamic> json) {
@@ -51,6 +53,7 @@ class SearchResult {
       modernExample: json['modern_example'] as String,
       caution: json['caution'] as String?,
       usageRatio: json['usage_ratio'] as String?,
+      relatedWords: List<String>.from(json['related_words'] as List? ?? []),
     );
   }
 }

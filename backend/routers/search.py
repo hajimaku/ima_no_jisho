@@ -24,6 +24,7 @@ class SearchResponse(BaseModel):
     modern_example: str
     caution: str | None
     usage_ratio: str | None
+    related_words: list[str] = []
 
 
 @router.post("/search", response_model=SearchResponse)
@@ -58,6 +59,7 @@ async def search(request: SearchRequest):
         modern_example=result.get("modern_example", ""),
         caution=result.get("caution"),
         usage_ratio=result.get("usage_ratio"),
+        related_words=result.get("related_words", []),
     )
     _cache[key] = (response, time.time())
     return response

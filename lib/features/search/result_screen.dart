@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../app/theme.dart';
 import '../../shared/api/api_client.dart';
 import '../../shared/utils/language_detector.dart';
@@ -170,6 +171,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
             caution: result.caution,
             usageRatio: result.usageRatio,
           ),
+        ],
+        if (result.relatedWords.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          _RelatedWords(words: result.relatedWords),
         ],
       ],
     );
@@ -396,6 +401,57 @@ class _MeaningBlock extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+// 関連ワードチップ
+class _RelatedWords extends StatelessWidget {
+  final List<String> words;
+  const _RelatedWords({required this.words});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '関連して調べる',
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: AppColors.washi.withOpacity(0.5),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: words.map((word) {
+            return GestureDetector(
+              onTap: () => context.pushNamed('result',
+                  pathParameters: {'word': word}),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: AppColors.vermillion.withOpacity(0.35),
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  word,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: AppColors.washi.withOpacity(0.8),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }
