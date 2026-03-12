@@ -204,11 +204,20 @@ tasks:
   - id: task-022
     title: "本番デプロイ（Flutter Web + FastAPI）"
     area: infra
-    status: todo
+    status: done
     sns_auto: true
-    completed_at: null
-    sns_hint: "ローカルだけで動かしてたアプリが、URLをシェアするだけで誰でも使えるようになった話"
+    completed_at: "2026-03-12"
+    sns_hint: "ローカルだけで動かしてたアプリが、URLをシェアするだけで誰でも使えるようになった話。VercelとRenderで本番稼働"
     screenshot_path: null
+
+  - id: task-026
+    title: "本番UI/UXバグ修正（フォント・スプラッシュ・ナビゲーション）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-12"
+    sns_hint: "本番で発見したバグをまとめて修正。日本語フォントの文字化け・スプラッシュの白フラッシュ・BottomNavに今日の一言タブ追加。ユーザーが触れる前に直せた話"
+    screenshot_path: "docs/screenshots/--port/S-06_settings.png"
 
   - id: task-023
     title: "App Store / Google Play 申請準備"
