@@ -1,11 +1,11 @@
 {
-    "name": "ima_no_jisho",
-    "short_name": "ima_no_jisho",
+    "name": "今の辞書",
+    "short_name": "今の辞書",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0A0A14",
+    "theme_color": "#0A0A14",
+    "description": "辞書的意味と今の使われ方をAIで並列表示する日本語・英語辞書アプリ",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
