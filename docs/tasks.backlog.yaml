@@ -219,6 +219,15 @@ tasks:
     sns_hint: "本番で発見したバグをまとめて修正。日本語フォントの文字化け・スプラッシュの白フラッシュ・BottomNavに今日の一言タブ追加。ユーザーが触れる前に直せた話"
     screenshot_path: "docs/screenshots/--port/S-06_settings.png"
 
+  - id: task-027
+    title: "関連ワードチップ機能（検索結果・今日の一言画面）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-12"
+    sns_hint: "「確信犯」を調べたら関連語に『故意犯』『冤罪』『正義感』が出てきた。AIが直接関連・同文脈・意外な連想の3パターンで提案。言葉の旅が止まらなくなる設計"
+    screenshot_path: null
+
   - id: task-023
     title: "App Store / Google Play 申請準備"
     area: release
