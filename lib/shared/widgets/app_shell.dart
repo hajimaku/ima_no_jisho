@@ -9,8 +9,9 @@ class AppShell extends StatelessWidget {
 
   int _currentIndex(BuildContext context) {
     final location = GoRouterState.of(context).uri.toString();
-    if (location.startsWith('/calendar')) return 1;
-    if (location.startsWith('/settings')) return 2;
+    if (location.startsWith('/daily-word')) return 1;
+    if (location.startsWith('/calendar')) return 2;
+    if (location.startsWith('/settings')) return 3;
     return 0;
   }
 
@@ -43,6 +44,11 @@ class AppShell extends StatelessWidget {
               label: '検索',
             ),
             NavigationDestination(
+              icon: Icon(Icons.auto_stories_outlined),
+              selectedIcon: Icon(Icons.auto_stories, color: AppColors.gold),
+              label: '今日の一言',
+            ),
+            NavigationDestination(
               icon: Icon(Icons.calendar_month_outlined),
               selectedIcon: Icon(Icons.calendar_month, color: AppColors.vermillion),
               label: 'カレンダー',
@@ -58,8 +64,10 @@ class AppShell extends StatelessWidget {
               case 0:
                 context.go('/');
               case 1:
-                context.go('/calendar');
+                context.go('/daily-word');
               case 2:
+                context.go('/calendar');
+              case 3:
                 context.go('/settings');
             }
           },

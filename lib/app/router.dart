@@ -20,6 +20,11 @@ final router = GoRouter(
           builder: (context, state) => const SearchScreen(),
         ),
         GoRoute(
+          path: '/daily-word',
+          name: 'daily-word',
+          builder: (context, state) => const DailyWordScreen(),
+        ),
+        GoRoute(
           path: '/calendar',
           name: 'calendar',
           builder: (context, state) => const CalendarScreen(),
@@ -39,11 +44,6 @@ final router = GoRouter(
         final word = state.pathParameters['word'] ?? '';
         return ResultScreen(word: word);
       },
-    ),
-    GoRoute(
-      path: '/daily-word',
-      name: 'daily-word',
-      builder: (context, state) => const DailyWordScreen(),
     ),
     GoRoute(
       path: '/splash',
