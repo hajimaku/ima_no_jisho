@@ -32,3 +32,45 @@ async def log_daily_word(date: str, user_id: str) -> None:
         "date": date,
         "user_id": user_id,
     }).execute()
+
+
+def get_daily_word(date: str) -> dict | None:
+    """daily_words テーブルから指定日の一言を取得"""
+    try:
+        client = get_client()
+        res = client.table("daily_words").select("*").eq("date", date).limit(1).execute()
+        if res.data:
+            return res.data[0]
+        return None
+    except Exception:
+        return None
+
+
+def save_daily_word(date: str, title: str, body: str, related_words: list[str]) -> None:
+    """daily_words テーブルに保存（同日は上書きしない）"""
+    try:
+        client = get_client()
+        client.table("daily_words").upsert({
+            "date": date,
+            "title": title,
+            "body": body,
+            "related_words": related_words,
+        }, on_conflict="date").execute()
+    except Exception:
+        pass  # 保存失敗してもレスポンスは返す
+
+
+def get_past_word_titles(limit: int = 30) -> list[str]:
+    """直近 limit 件の使用済みタイトルを取得（重複防止用）"""
+    try:
+        client = get_client()
+        res = (
+            client.table("daily_words")
+            .select("title")
+            .order("date", desc=True)
+            .limit(limit)
+            .execute()
+        )
+        return [row["title"] for row in res.data]
+    except Exception:
+        return []
