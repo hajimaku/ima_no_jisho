@@ -100,7 +100,7 @@ class ApiClient {
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'word': word}),
         )
-        .timeout(const Duration(seconds: 10));
+        .timeout(const Duration(seconds: 30));
 
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
