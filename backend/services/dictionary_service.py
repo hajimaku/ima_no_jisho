@@ -1,10 +1,9 @@
 """
 外部辞書APIから辞書的意味を取得する
-- 日本語: goo辞書API (GOO_APP_ID 環境変数が必要)
-- 英語: Free Dictionary API (キー不要)
+- 日本語: Wikipedia API（日本語版、キー不要）
+- 英語: Free Dictionary API（キー不要）
 - 取得失敗時は None を返し、呼び出し元でAI生成にフォールバック
 """
-import os
 import re
 import httpx
 
@@ -36,17 +35,14 @@ async def _fetch_english(word: str) -> dict | None:
         data = resp.json()
         entry = data[0]
 
-        # 発音記号
         phonetics = entry.get("phonetics", [])
         reading = next((p.get("text", "") for p in phonetics if p.get("text")), "")
 
-        # 最初の品詞・定義・用例を取得
         meanings = entry.get("meanings", [])
         if not meanings:
             return None
 
-        first_meaning = meanings[0]
-        definitions = first_meaning.get("definitions", [])
+        definitions = meanings[0].get("definitions", [])
         if not definitions:
             return None
 
@@ -63,37 +59,35 @@ async def _fetch_english(word: str) -> dict | None:
 
 
 async def _fetch_japanese(word: str) -> dict | None:
-    """goo辞書API (https://labs.goo.ne.jp/)"""
-    app_id = os.getenv("GOO_APP_ID")
-    if not app_id:
-        return None  # APIキー未設定 → AIにフォールバック
-
-    url = "https://labs.goo.ne.jp/api/dictionary"
-    payload = {
-        "app_id": app_id,
-        "title": word,
-        "body": word,
-    }
+    """Wikipedia API（日本語版）
+    概念語・名詞に強い。基本動詞など項目がない場合はNoneを返してAIにフォールバック。
+    """
+    import urllib.parse
+    encoded = urllib.parse.quote(word)
+    url = f"https://ja.wikipedia.org/api/rest_v1/page/summary/{encoded}"
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
-            resp = await client.post(url, json=payload)
+            resp = await client.get(url, headers={"Accept": "application/json"})
         if resp.status_code != 200:
             return None
 
         data = resp.json()
-        # goo辞書APIのレスポンス: {"title": "...", "candidates": [...]}
-        candidates = data.get("candidates", [])
-        if not candidates:
+
+        # disambiguationページ（曖昧さ回避）はスキップ
+        if data.get("type") == "disambiguation":
             return None
 
-        best = candidates[0]
-        dict_meaning = best.get("body", "")
-        if not dict_meaning:
+        extract = data.get("extract", "").strip()
+        if not extract:
             return None
+
+        # extractが長すぎる場合は最初の2文に絞る
+        sentences = extract.split("。")
+        short_extract = "。".join(sentences[:2]) + "。" if len(sentences) > 2 else extract
 
         return {
-            "reading": best.get("reading", ""),
-            "dict_meaning": dict_meaning,
+            "reading": "",  # Wikipedia APIでは読み仮名が取れないのでAIに委ねる
+            "dict_meaning": short_extract,
             "dict_example": "",
         }
     except Exception:
