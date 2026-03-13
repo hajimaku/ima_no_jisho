@@ -27,6 +27,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final history = ref.watch(searchHistoryProvider);
+    final relatedWords = ref.watch(lastRelatedWordsProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -67,6 +68,34 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               // 今日の一言カード
               _DailyWordCard(),
               const SizedBox(height: 24),
+
+              // 関連して調べる
+              if (relatedWords.isNotEmpty) ...[
+                Text(
+                  '関連して調べる',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: AppColors.washi.withOpacity(0.5),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 36,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: relatedWords.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 8),
+                    itemBuilder: (context, index) {
+                      final word = relatedWords[index];
+                      return _SearchChip(
+                        label: word,
+                        onTap: () => _search(word),
+                        onLongPress: () {},
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
 
               // 最近の検索
               if (history.isNotEmpty) ...[

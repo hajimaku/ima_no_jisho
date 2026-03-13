@@ -5,6 +5,7 @@ import '../../app/theme.dart';
 import '../../shared/api/api_client.dart';
 import '../../shared/utils/language_detector.dart';
 import '../../shared/utils/user_id.dart';
+import 'search_provider.dart';
 import 'search_result_provider.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
@@ -41,11 +42,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     super.dispose();
   }
 
-  void _triggerFadeIn() {
+  void _triggerFadeIn(List<String> relatedWords) {
     if (!_hasAnimated) {
       _hasAnimated = true;
       _fadeController.forward();
       _sendSearchLog();
+      if (relatedWords.isNotEmpty) {
+        ref.read(lastRelatedWordsProvider.notifier).state = relatedWords;
+      }
     }
   }
 
@@ -74,7 +78,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
           loading: () => _buildSkeleton(),
           error: (error, _) => _buildError(error),
           data: (result) {
-            _triggerFadeIn();
+            _triggerFadeIn(result.relatedWords);
             return FadeTransition(
               opacity: _fadeAnimation,
               child: _buildContent(result),

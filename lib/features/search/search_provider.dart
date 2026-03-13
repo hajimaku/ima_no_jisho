@@ -47,3 +47,6 @@ final searchHistoryProvider =
     NotifierProvider<SearchHistoryNotifier, List<String>>(
   SearchHistoryNotifier.new,
 );
+
+// 直前の検索結果の関連用語を保持する（ホーム画面に表示）
+final lastRelatedWordsProvider = StateProvider<List<String>>((ref) => []);
