@@ -28,6 +28,7 @@ class SearchResult {
   final String? caution;
   final String? usageRatio;
   final List<String> relatedWords;
+  final String dictSource;
 
   const SearchResult({
     required this.word,
@@ -40,6 +41,7 @@ class SearchResult {
     this.caution,
     this.usageRatio,
     this.relatedWords = const [],
+    this.dictSource = 'AI解析',
   });
 
   factory SearchResult.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class SearchResult {
       caution: json['caution'] as String?,
       usageRatio: json['usage_ratio'] as String?,
       relatedWords: List<String>.from(json['related_words'] as List? ?? []),
+      dictSource: json['dict_source'] as String? ?? 'AI解析',
     );
   }
 }

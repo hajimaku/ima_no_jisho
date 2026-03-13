@@ -53,6 +53,7 @@ async def _fetch_english(word: str) -> dict | None:
             "reading": reading,
             "dict_meaning": dict_meaning,
             "dict_example": dict_example,
+            "dict_source": "辞書API",
         }
     except Exception:
         return None
@@ -89,6 +90,7 @@ async def _fetch_japanese(word: str) -> dict | None:
             "reading": "",  # Wikipedia APIでは読み仮名が取れないのでAIに委ねる
             "dict_meaning": short_extract,
             "dict_example": "",
+            "dict_source": "Wikipedia",
         }
     except Exception:
         return None

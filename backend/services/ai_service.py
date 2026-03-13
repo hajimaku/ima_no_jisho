@@ -95,5 +95,8 @@ async def analyze_word(word: str, dict_data: dict | None = None) -> dict:
             result["dict_meaning"] = dict_data["dict_meaning"]
         if dict_data.get("dict_example"):
             result["dict_example"] = dict_data["dict_example"]
+        result["dict_source"] = dict_data.get("dict_source", "AI解析")
+    else:
+        result["dict_source"] = "AI解析"
 
     return result

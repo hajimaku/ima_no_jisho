@@ -152,8 +152,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
           blockColor: AppColors.dictBlock,
           content: result.dictMeaning,
           example: result.dictExample,
-          isAI: false,
-          source: 'AI解析',
+          isAI: result.dictSource == 'AI解析',
+          source: result.dictSource != 'AI解析' ? result.dictSource : null,
         ),
         const SizedBox(height: 16),
         _MeaningBlock(
