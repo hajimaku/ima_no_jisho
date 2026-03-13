@@ -2,6 +2,7 @@ import time
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from services.ai_service import analyze_word
+from services.dictionary_service import fetch_dict_meaning
 
 router = APIRouter()
 
@@ -43,7 +44,10 @@ async def search(request: SearchRequest):
             return cached_response
 
     try:
-        result = await analyze_word(word)
+        # 1. 外部辞書APIから辞書的意味を取得（失敗時はNone）
+        dict_data = await fetch_dict_meaning(word)
+        # 2. AIで現代用法を生成（辞書データがあれば渡す）
+        result = await analyze_word(word, dict_data=dict_data)
     except ValueError as e:
         raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
