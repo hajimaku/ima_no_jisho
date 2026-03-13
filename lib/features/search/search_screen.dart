@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../app/theme.dart';
+import '../../shared/ads/ad_helper.dart';
 import 'search_provider.dart';
 import 'search_result_provider.dart';
 
@@ -14,13 +17,57 @@ class SearchScreen extends ConsumerStatefulWidget {
 
 class _SearchScreenState extends ConsumerState<SearchScreen> {
   final _controller = TextEditingController();
+  InterstitialAd? _interstitialAd;
+  int _searchCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (!kIsWeb) _loadInterstitial();
+  }
+
+  void _loadInterstitial() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) => _interstitialAd = ad,
+        onAdFailedToLoad: (_) => _interstitialAd = null,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
 
   void _search([String? word]) {
     final query = (word ?? _controller.text).trim();
     if (query.isEmpty) return;
     ref.read(searchHistoryProvider.notifier).add(query);
     _controller.clear();
-    context.pushNamed('result', pathParameters: {'word': query});
+
+    _searchCount++;
+    if (!kIsWeb && _searchCount % 5 == 0 && _interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          _loadInterstitial();
+          context.pushNamed('result', pathParameters: {'word': query});
+        },
+        onAdFailedToShowFullScreenContent: (ad, _) {
+          ad.dispose();
+          _loadInterstitial();
+          context.pushNamed('result', pathParameters: {'word': query});
+        },
+      );
+      _interstitialAd!.show();
+      _interstitialAd = null;
+    } else {
+      context.pushNamed('result', pathParameters: {'word': query});
+    }
   }
 
   @override

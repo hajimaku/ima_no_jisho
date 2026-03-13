@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../app/theme.dart';
+import '../../shared/ads/banner_ad_widget.dart';
 import '../../shared/api/api_client.dart';
 import '../../shared/utils/language_detector.dart';
 import '../../shared/utils/user_id.dart';
@@ -72,7 +73,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         title: Text(widget.word),
         leading: BackButton(onPressed: () => Navigator.of(context).pop()),
       ),
-      body: SingleChildScrollView(
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: resultAsync.when(
           loading: () => _buildSkeleton(),
@@ -85,6 +89,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
             );
           },
         ),
+            ),
+          ),
+          const BannerAdWidget(),
+        ],
       ),
     );
   }
