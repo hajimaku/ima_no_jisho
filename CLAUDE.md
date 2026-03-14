@@ -173,30 +173,57 @@ USER = f"""
 
 ---
 
-## SNS発信との連携
+## タスク完了後の必須手順（省略禁止）
 
-### タスク完了時のルール（必ず実行すること）
+**タスクが完了するたびに、必ず以下を順番に実行する。完了報告の前にやること。**
 
-実装タスクが完了したら、**その場で** `docs/tasks.backlog.yaml` を更新する。
+### ステップ1: backlogを更新する
+
+`docs/tasks.backlog.yaml` の該当タスクを更新する。
 
 ```yaml
 status: done
-sns_auto: true
-completed_at: "2026-03-09"  # 完了した実際の日付（currentDateを使う）
-sns_hint: "どんな体験として発信するかのヒント（ユーザー目線で書く）"
+sns_auto: true        # SNS発信したい内容なら true
+completed_at: "YYYY-MM-DD"  # currentDate の日付を使う
+sns_hint: "ユーザーが得られる体験・気づきとして書く（技術用語禁止）"
+screenshot_path: "docs/screenshots/YYYY-MM-DD/S-XX_xxxx.png"  # 撮影後に記入
 ```
 
-### 更新のタイミング
-- 画面UI実装完了時
-- APIエンドポイント動作確認時
-- フロント↔バックエンド接続完了時
-- 新機能が動作確認できた時
+### ステップ2: スクリーンショットを撮影する（UI変更があった場合）
 
-### スクリーンショットの自動保存
-Playwright MCPが使える状態のとき、画面実装完了後に自動でスクリーンショットを撮り
-`docs/screenshots/YYYY-MM-DD/` に保存する。
+画面UIに変更があった場合は必ず撮影する。
 
-### SNS投稿生成
-週1回 Claude.ai で「今の辞書の投稿作って」と呼び出すと、
+```bash
+/usr/local/opt/node@20/bin/node scripts/capture_screenshots.js
+```
+
+引数なしで実行 → 今日の日付 `docs/screenshots/YYYY-MM-DD/` に自動保存。
+
+撮影後、backlog の `screenshot_path` を更新する。
+
+### ステップ3: backlogのscreenshot_pathを自動更新する
+
+```bash
+/usr/local/bin/python3.13 scripts/update_backlog.py
+```
+
+### 完了トリガー（この状態になったら手順を実行する）
+- 画面UIの実装・変更が完了したとき
+- APIエンドポイントの動作確認が取れたとき
+- フロント↔バックエンドの接続が完了したとき
+- 新機能が動作確認できたとき
+
+### 新しい画面を追加した場合の追加作業
+`scripts/capture_screenshots.js` と `scripts/update_backlog.py` の
+`SCREEN_TO_TASK` マッピングも更新する。
+
+---
+
+## SNS投稿の生成方法
+
+週1回、Claude.ai で「今の辞書の投稿作って」と呼び出すと、
 `docs/tasks.backlog.yaml` の `sns_auto: true` かつ `status: done` のタスクをもとに
 投稿文が自動生成される。
+
+スクリーンショットがある（`screenshot_path` が設定されている）タスクは
+画像付きで投稿文の質が上がるため、**手順2を必ず実行すること**。

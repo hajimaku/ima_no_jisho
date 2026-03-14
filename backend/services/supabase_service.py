@@ -60,6 +60,19 @@ def save_daily_word(date: str, title: str, body: str, related_words: list[str]) 
         pass  # 保存失敗してもレスポンスは返す
 
 
+def save_feedback(word: str, report_type: str, user_id: str = "") -> None:
+    """feedback テーブルに誤り報告を保存"""
+    try:
+        client = get_client()
+        client.table("feedback").insert({
+            "word": word,
+            "report_type": report_type,
+            "user_id": user_id or None,
+        }).execute()
+    except Exception:
+        pass  # 保存失敗してもレスポンスは返す
+
+
 def get_past_word_titles(limit: int = 30) -> list[str]:
     """直近 limit 件の使用済みタイトルを取得（重複防止用）"""
     try:

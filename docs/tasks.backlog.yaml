@@ -237,6 +237,87 @@ tasks:
     sns_hint: "墨背景に金の「今」一文字。個人開発アプリのアイコンをPythonスクリプトで生成、flutter_launcher_iconsでiOS/Android全サイズ自動生成した話"
     screenshot_path: "assets/icon/icon.png"
 
+  - id: task-029
+    title: "プライバシーポリシーページ作成（App Store申請対応）"
+    area: release
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-13"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-030
+    title: "アプリ名を「今の辞書」に統一（iOS/Android/Web）"
+    area: release
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-13"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-031
+    title: "Renderコールドスタート対策（UptimeRobot 5分pingで常時起動）"
+    area: infra
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-13"
+    sns_hint: null
+    screenshot_path: null
+
+  - id: task-032
+    title: "外部辞書API導入（日本語: Wikipedia API / 英語: Free Dictionary API）"
+    area: backend
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-13"
+    sns_hint: "AIだけに頼らず、実際の辞書データを先に取得してAIが現代の使われ方だけ補完する設計に。精度と信頼性が上がった話"
+    screenshot_path: null
+
+  - id: task-033
+    title: "辞書ソースラベル動的表示（Wikipedia / 辞書API / AI解析）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-13"
+    sns_hint: "どのデータがどこから来ているか一目でわかるように。「AI解析」「Wikipedia」「辞書API」をラベルで明示。透明性の高い辞書アプリの話"
+    screenshot_path: null
+
+  - id: task-034
+    title: "AdMob広告実装（バナー + インタースティシャル）"
+    area: monetization
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-14"
+    sns_hint: "無料アプリに広告を入れた。5回に1回だけインタースティシャルを出す設計で、体験を壊さずマネタイズする工夫"
+    screenshot_path: null
+
+  - id: task-035
+    title: "ホーム画面に関連用語チップ表示（検索後に引き継ぎ）"
+    area: ui
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-14"
+    sns_hint: "検索結果の関連語がホーム画面に残り続ける。言葉の旅が途切れない設計。調べるほど次の言葉が見つかる体験"
+    screenshot_path: null
+
+  - id: task-036
+    title: "今日の一言のSupabase永続化・多様化（重複防止・6カテゴリ）"
+    area: daily_word
+    status: done
+    sns_auto: true
+    completed_at: "2026-03-14"
+    sns_hint: "毎日違う言葉が出るように。過去60日分の履歴をAIに渡して重複防止。慣用句・カタカナ語・若者言葉など6カテゴリから選出、Supabaseに永続保存"
+    screenshot_path: null
+
+  - id: task-037
+    title: "ユーザーフィードバック機能（誤り報告ボタン）"
+    area: ui
+    status: done
+    sns_auto: false
+    completed_at: "2026-03-14"
+    sns_hint: null
+    screenshot_path: null
+
   - id: task-023
     title: "App Store / Google Play 申請準備"
     area: release

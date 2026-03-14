@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from routers import search, daily_word, log
+from routers import search, daily_word, log, feedback
 
 load_dotenv()
 
@@ -21,6 +21,7 @@ app.add_middleware(
 app.include_router(search.router, prefix="/api")
 app.include_router(daily_word.router, prefix="/api")
 app.include_router(log.router, prefix="/api")
+app.include_router(feedback.router, prefix="/api")
 
 
 @app.get("/")

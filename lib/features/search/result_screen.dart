@@ -64,6 +64,57 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     }
   }
 
+  Future<void> _showFeedbackDialog() async {
+    const options = [
+      '辞書的意味が誤っている',
+      '今の使われ方が誤っている',
+      '用例が不適切',
+      'その他',
+    ];
+
+    final selected = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.card,
+        title: Text('誤りを報告', style: Theme.of(context).textTheme.headlineMedium),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: options.map((option) {
+            return ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(option, style: Theme.of(context).textTheme.bodyMedium),
+              onTap: () => Navigator.pop(ctx, option),
+            );
+          }).toList(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text('キャンセル',
+                style: TextStyle(color: AppColors.washi.withOpacity(0.6))),
+          ),
+        ],
+      ),
+    );
+
+    if (selected == null || !mounted) return;
+
+    try {
+      final uid = await UserId.get();
+      final client = ref.read(apiClientProvider);
+      await client.reportFeedback(widget.word, selected, uid);
+    } catch (_) {}
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('報告を受け付けました。ありがとうございます。'),
+        backgroundColor: AppColors.card,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final resultAsync = ref.watch(searchResultProvider(widget.word));
@@ -72,6 +123,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       appBar: AppBar(
         title: Text(widget.word),
         leading: BackButton(onPressed: () => Navigator.of(context).pop()),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.flag_outlined,
+                color: AppColors.washi.withOpacity(0.6), size: 20),
+            tooltip: '誤りを報告',
+            onPressed: _showFeedbackDialog,
+          ),
+        ],
       ),
       body: Column(
         children: [

@@ -137,6 +137,25 @@ class ApiClient {
         .timeout(const Duration(seconds: 5));
   }
 
+  Future<void> reportFeedback(String word, String reportType, String userId) async {
+    final uri = Uri.parse('$baseUrl/api/feedback');
+    try {
+      await _client
+          .post(
+            uri,
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({
+              'word': word,
+              'report_type': reportType,
+              'user_id': userId,
+            }),
+          )
+          .timeout(const Duration(seconds: 5));
+    } catch (_) {
+      // 送信失敗はサイレントに無視
+    }
+  }
+
   Future<DailyWord> getDailyWord({String? date}) async {
     final path = date != null ? '/api/daily-word/$date' : '/api/daily-word';
     final uri = Uri.parse('$baseUrl$path');
