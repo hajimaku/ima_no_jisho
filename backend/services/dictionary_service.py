@@ -1,6 +1,6 @@
 """
 外部辞書APIから辞書的意味を取得する
-- 日本語: Wikipedia API（日本語版、キー不要）
+- 日本語: AI生成（Wikipedia APIはこのアプリの対象語に対応していないため除外）
 - 英語: Free Dictionary API（キー不要）
 - 取得失敗時は None を返し、呼び出し元でAI生成にフォールバック
 """
@@ -15,10 +15,11 @@ def _is_japanese(word: str) -> bool:
 async def fetch_dict_meaning(word: str) -> dict | None:
     """
     辞書的意味を外部APIから取得する。
-    返却: {"dict_meaning": str, "dict_example": str, "reading": str} or None
+    日本語は None を返してAI生成に委ねる。
+    英語は Free Dictionary API を使用する。
     """
     if _is_japanese(word):
-        return await _fetch_japanese(word)
+        return None  # 日本語はAIが辞書的意味も生成する
     else:
         return await _fetch_english(word)
 
@@ -54,43 +55,6 @@ async def _fetch_english(word: str) -> dict | None:
             "dict_meaning": dict_meaning,
             "dict_example": dict_example,
             "dict_source": "辞書API",
-        }
-    except Exception:
-        return None
-
-
-async def _fetch_japanese(word: str) -> dict | None:
-    """Wikipedia API（日本語版）
-    概念語・名詞に強い。基本動詞など項目がない場合はNoneを返してAIにフォールバック。
-    """
-    import urllib.parse
-    encoded = urllib.parse.quote(word)
-    url = f"https://ja.wikipedia.org/api/rest_v1/page/summary/{encoded}"
-    try:
-        async with httpx.AsyncClient(timeout=5.0) as client:
-            resp = await client.get(url, headers={"Accept": "application/json"})
-        if resp.status_code != 200:
-            return None
-
-        data = resp.json()
-
-        # disambiguationページ（曖昧さ回避）はスキップ
-        if data.get("type") == "disambiguation":
-            return None
-
-        extract = data.get("extract", "").strip()
-        if not extract:
-            return None
-
-        # extractが長すぎる場合は最初の2文に絞る
-        sentences = extract.split("。")
-        short_extract = "。".join(sentences[:2]) + "。" if len(sentences) > 2 else extract
-
-        return {
-            "reading": "",  # Wikipedia APIでは読み仮名が取れないのでAIに委ねる
-            "dict_meaning": short_extract,
-            "dict_example": "",
-            "dict_source": "Wikipedia",
         }
     except Exception:
         return None

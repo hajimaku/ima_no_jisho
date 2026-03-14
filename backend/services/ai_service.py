@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import anthropic
 
 SYSTEM_PROMPT = """
@@ -81,9 +82,15 @@ async def analyze_word(word: str, dict_data: dict | None = None) -> dict:
 
     raw = message.content[0].text.strip()
 
+    # コードブロック除去（```json ... ``` や ``` ... ``` 形式）
     if raw.startswith("```"):
-        lines = raw.split("\n")
-        raw = "\n".join(lines[1:-1])
+        raw = re.sub(r"^```[a-zA-Z]*\n?", "", raw)
+        raw = re.sub(r"\n?```$", "", raw.strip())
+
+    # JSON部分だけ抽出（前後に余分なテキストがある場合に対応）
+    match = re.search(r"\{[\s\S]*\}", raw)
+    if match:
+        raw = match.group(0)
 
     result = json.loads(raw)
 
