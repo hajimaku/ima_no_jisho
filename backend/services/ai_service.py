@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 import re
@@ -57,7 +58,7 @@ USER_PROMPT_MODERN_ONLY = """
 
 
 async def analyze_word(word: str, dict_data: dict | None = None) -> dict:
-    """Claude APIを使って単語を解析する（非同期）"""
+    """Claude APIを使って単語を解析する（非同期、最大3回リトライ）"""
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
         raise ValueError("ANTHROPIC_API_KEY が設定されていません")
@@ -72,13 +73,25 @@ async def analyze_word(word: str, dict_data: dict | None = None) -> dict:
     else:
         prompt = USER_PROMPT_FULL.format(word=word)
 
-    message = await client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1024,
-        temperature=0.2,
-        system=SYSTEM_PROMPT.strip(),
-        messages=[{"role": "user", "content": prompt}],
-    )
+    last_error = None
+    for attempt in range(3):
+        try:
+            message = await client.messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=1024,
+                temperature=0.2,
+                system=SYSTEM_PROMPT.strip(),
+                messages=[{"role": "user", "content": prompt}],
+            )
+            break
+        except anthropic.RateLimitError:
+            raise
+        except Exception as e:
+            last_error = e
+            if attempt < 2:
+                await asyncio.sleep(1.5 * (attempt + 1))
+    else:
+        raise last_error
 
     raw = message.content[0].text.strip()
 
